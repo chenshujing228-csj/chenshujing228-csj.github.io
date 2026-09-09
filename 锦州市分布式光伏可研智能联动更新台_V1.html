@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>锦州市分布式光伏可研智能联动更新台</title>
+<style>
+:root{
+  --bg:#f4f6f8; --card:#fff; --text:#1f2937; --muted:#6b7280; --line:#e5e7eb;
+  --navy:#12314b; --blue:#2563eb; --red:#dc2626; --green:#059669; --amber:#d97706;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif}
+header{background:linear-gradient(135deg,#102b43,#163e60);color:#fff;padding:22px 28px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+header h1{margin:0;font-size:24px}
+header p{margin:8px 0 0;color:#dbeafe;font-size:13px}
+.container{max-width:1440px;margin:20px auto;padding:0 18px 36px}
+.grid{display:grid;grid-template-columns:1.05fr 1.95fr;gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 2px 10px rgba(15,23,42,.05);padding:18px}
+.card h2{font-size:17px;margin:0 0 14px}
+.card h3{font-size:14px;margin:16px 0 10px}
+.small{font-size:12px;color:var(--muted)}
+.upload{border:1.5px dashed #9ca3af;border-radius:12px;padding:18px;text-align:center;background:#fafafa}
+.upload input{margin-top:10px}
+.filetag{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-top:10px;font-size:13px}
+.badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:600}
+.red{background:#fee2e2;color:#991b1b}.green{background:#d1fae5;color:#065f46}.amber{background:#fef3c7;color:#92400e}.blue{background:#dbeafe;color:#1e40af}
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+.kpi>div{border:1px solid var(--line);border-radius:10px;padding:11px;background:#fbfdff}
+.kpi b{display:block;font-size:17px;margin-top:4px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{border-bottom:1px solid var(--line);padding:9px 8px;text-align:left;vertical-align:middle}
+th{background:#f8fafc;color:#334155;font-weight:700;position:sticky;top:0}
+tr:hover td{background:#fafcff}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.section-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.section{border:1px solid var(--line);border-radius:10px;padding:12px}
+.section .title{display:flex;justify-content:space-between;gap:8px;font-weight:700;font-size:13px}
+.section ul{margin:8px 0 0;padding-left:18px;font-size:12px;color:#475569}
+.alert{border-left:4px solid var(--red);padding:10px 12px;background:#fff7f7;border-radius:8px;margin:9px 0;font-size:12px}
+.alert.am{border-left-color:var(--amber);background:#fffbeb}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+button{border:0;border-radius:9px;padding:10px 14px;background:var(--navy);color:#fff;font-weight:700;cursor:pointer}
+button.secondary{background:#475569}
+button.light{background:#e2e8f0;color:#0f172a}
+button:hover{filter:brightness(.96)}
+footer{color:#64748b;font-size:11px;text-align:center;margin-top:20px}
+@media(max-width:980px){.grid{grid-template-columns:1fr}.kpi{grid-template-columns:repeat(2,1fr)}.section-list{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>锦州市分布式光伏可研智能联动更新台</h1>
+  <p>项目专用 · Excel参数源 → 章节影响识别 → 全文冲突检测 → 仅修改部分Word / 完整可研输出</p>
+</header>
+
+<div class="container">
+  <div class="grid">
+    <div>
+      <div class="card">
+        <h2>① 文件区</h2>
+        <div class="upload">
+          <b>上传母版可研 Word / PDF</b><br/>
+          <span class="small">建议正式更新时优先使用 Word 作为可编辑母版</span><br/>
+          <input id="reportFile" type="file" accept=".docx,.pdf"/>
+        </div>
+        <div class="upload" style="margin-top:12px">
+          <b>上传最新版投融资 Excel</b><br/>
+          <span class="small">自动读取核心参数、财务结果和附表数据</span><br/>
+          <input id="excelFile" type="file" accept=".xlsx,.xls"/>
+        </div>
+        <div class="filetag"><span>当前母版</span><b id="reportName">20260904版可研</b></div>
+        <div class="filetag"><span>当前数据版</span><b id="excelName">待上传最新版Excel</b></div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h2>② 本项目唯一参数字典</h2>
+        <div class="small">所有章节只允许引用这里的最终参数。修改Excel后，先更新参数字典，再反向检查全文。</div>
+        <h3>建设参数</h3>
+        <table>
+          <tr><td>总装机容量</td><td class="num">74.30 MWp</td></tr>
+          <tr><td>屋面装机</td><td class="num">34.08 MWp</td></tr>
+          <tr><td>车棚装机</td><td class="num">40.23 MWp</td></tr>
+          <tr><td>储能容量</td><td class="num">26,749.57 kWh</td></tr>
+          <tr><td>年等效利用小时</td><td class="num">1,363 h</td></tr>
+          <tr><td>组件年衰减率</td><td class="num">0.50%</td></tr>
+        </table>
+        <h3>经营 / 财务参数</h3>
+        <table>
+          <tr><td>自发自用比例</td><td class="num"><span class="badge red">70.00%</span></td></tr>
+          <tr><td>余电上网比例</td><td class="num"><span class="badge red">30.00%</span></td></tr>
+          <tr><td>自用结算价</td><td class="num">0.68 元/kWh</td></tr>
+          <tr><td>余电上网价</td><td class="num">0.29 元/kWh</td></tr>
+          <tr><td>总投资</td><td class="num">69,550.70 万元</td></tr>
+          <tr><td>税前IRR</td><td class="num">3.95%</td></tr>
+          <tr><td>税后IRR</td><td class="num">3.06%</td></tr>
+          <tr><td>资本金IRR</td><td class="num">8.42%</td></tr>
+          <tr><td>综合DSCR</td><td class="num">1.48</td></tr>
+          <tr><td>最低DSCR</td><td class="num">1.18</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <h2>③ 核心参数变更对照</h2>
+        <div class="kpi">
+          <div><span class="small">检测参数</span><b>18</b></div>
+          <div><span class="small">发生变化</span><b style="color:var(--red)">9</b></div>
+          <div><span class="small">受影响章节</span><b>7章+</b></div>
+          <div><span class="small">高风险冲突</span><b style="color:var(--amber)">4</b></div>
+        </div>
+        <table>
+          <thead><tr><th>参数</th><th class="num">原可研</th><th class="num">新版口径</th><th>状态</th><th>主要影响</th></tr></thead>
+          <tbody>
+            <tr><td>自发自用比例</td><td class="num">80%</td><td class="num">70%</td><td><span class="badge red">变化</span></td><td>2.4 / 4.6.10 / 5 / 6 / 8 / 9 / 附表5-9</td></tr>
+            <tr><td>余电上网比例</td><td class="num">20%</td><td class="num">30%</td><td><span class="badge red">变化</span></td><td>4.6.10 / 5 / 6 / 8 / 9 / 附表5-9</td></tr>
+            <tr><td>自用结算价</td><td class="num">0.70</td><td class="num">0.68</td><td><span class="badge red">变化</span></td><td>6.2 / 6.4 / 6.6 / 8 / 9 / 附表5-9</td></tr>
+            <tr><td>总投资</td><td class="num">69,550.70</td><td class="num">69,550.70</td><td><span class="badge green">一致</span></td><td>1.1.6 / 6.1 / 6.3 / 附表3</td></tr>
+            <tr><td>税前IRR</td><td class="num">4.71%</td><td class="num">3.95%</td><td><span class="badge red">变化</span></td><td>1.4 / 6.2.7 / 6.6 / 9.1 / 9.2</td></tr>
+            <tr><td>税后IRR</td><td class="num">3.66%</td><td class="num">3.06%</td><td><span class="badge red">变化</span></td><td>1.4 / 6.2.7 / 9.1 / 9.2</td></tr>
+            <tr><td>综合DSCR</td><td class="num">1.52</td><td class="num">1.48</td><td><span class="badge red">变化</span></td><td>6.4 / 6.5 / 8 / 9.2 / 附表9</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h2>④ 章节影响地图</h2>
+        <div class="section-list">
+          <div class="section">
+            <div class="title"><span>第1章 概述</span><span class="badge red">必查</span></div>
+            <ul><li>1.1.4 建设内容和规模</li><li>1.1.5 建设工期</li><li>1.1.6 投资规模和资金来源</li><li>1.4 主要结论和建议</li></ul>
+          </div>
+          <div class="section">
+            <div class="title"><span>第2章 背景/需求/产出</span><span class="badge amber">条件联动</span></div>
+            <ul><li>2.3.1 光伏现状</li><li>2.3.2 市场需求</li><li>2.4 项目产出方案</li><li>2.5 商业模式</li></ul>
+          </div>
+          <div class="section">
+            <div class="title"><span>第3章 选址与保障</span><span class="badge amber">条件联动</span></div>
+            <ul><li>3.1.1.2 使用权期限覆盖</li><li>3.1.2 点位清单</li><li>其余自然条件通常保持</li></ul>
+          </div>
+          <div class="section">
+            <div class="title"><span>第4章 建设方案</span><span class="badge red">必查</span></div>
+            <ul><li>4.1—4.5 规模/面积/分期</li><li>4.6.10 发电/消纳/上网</li><li>4.8 储能与更新</li><li>4.14 建设管理</li></ul>
+          </div>
+          <div class="section">
+            <div class="title"><span>第5章 运营方案</span><span class="badge amber">必扫</span></div>
+            <ul><li>5.1 收益模式</li><li>5.2 光伏/储能运营</li><li>5.4 使用期限/组织配置</li></ul>
+          </div>
+          <div class="section">
+            <div class="title"><span>第6章 投融资财务</span><span class="badge red">核心必改</span></div>
+            <ul><li>6.1—6.6 全部联动</li><li>IRR/NPV/回收期/DSCR</li><li>敏感性及压力测试必须重跑</li></ul>
+          </div>
+          <div class="section">
+            <div class="title"><span>第7章 影响效果</span><span class="badge amber">派生联动</span></div>
+            <ul><li>7.4 能源利用</li><li>7.5 碳排放/减排</li><li>发电量变化时重算</li></ul>
+          </div>
+          <div class="section">
+            <div class="title"><span>第8—10章</span><span class="badge red">结论+附表</span></div>
+            <ul><li>8.1.4 / 8.2 财务运营风险</li><li>9.1 / 9.2 财务结论</li><li>附表3—10直接从Excel重建</li></ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h2>⑤ 冲突检测</h2>
+        <div class="alert"><b>自用比例冲突：</b>4.6.10 已为 70%，6.2.1 / 6.2.2 / 6.6 仍存在 80% 旧口径。</div>
+        <div class="alert"><b>财务结果冲突：</b>正文旧税前IRR 4.71%，新版口径为 3.95%；9.1、9.2及敏感性结论必须同步。</div>
+        <div class="alert am"><b>运营模式文字冲突：</b>2.4部分位置写“统一采用自发自用”，其他章节写“自发自用、余电上网”，需统一表述边界。</div>
+        <div class="alert am"><b>附表冲突：</b>附表5—9仍保留旧营业收入、成本、税费、利润和现金流，不能仅改正文。</div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h2>⑥ 输出</h2>
+        <div class="actions">
+          <button onclick="exportChangeList()">生成修改清单</button>
+          <button onclick="alert('下一版接入：自动生成仅修改部分Word')">生成仅修改部分Word</button>
+          <button class="secondary" onclick="alert('下一版接入：自动合并完整可研Word')">生成完整更新版可研</button>
+          <button class="light" onclick="runCheck()">全文一致性检查</button>
+        </div>
+        <p id="checkResult" class="small" style="margin-top:12px"></p>
+      </div>
+    </div>
+  </div>
+  <footer>V1 原型 · 锦州市市属国有企业屋面及车棚分布式光伏发电项目专用</footer>
+</div>
+
+<script>
+document.getElementById('reportFile').addEventListener('change', e=>{
+  if(e.target.files[0]) document.getElementById('reportName').textContent = e.target.files[0].name;
+});
+document.getElementById('excelFile').addEventListener('change', e=>{
+  if(e.target.files[0]) document.getElementById('excelName').textContent = e.target.files[0].name;
+});
+function runCheck(){
+  document.getElementById('checkResult').innerHTML =
+    '当前原型检查结果：<b style="color:#dc2626">发现4类高优先级冲突</b>。正式版将读取Word/PDF与Excel后，逐项列出“旧值—新值—出现章节—建议替换文本”。';
+}
+function exportChangeList(){
+  const text = `锦州市分布式光伏可研数据联动修改清单（V1示例）
+
+1. 第1章：检查1.1.4、1.1.5、1.1.6、1.4
+2. 第2章：检查2.3.1、2.3.2、2.4、2.5
+3. 第3章：检查3.1.1.2、3.1.2
+4. 第4章：检查4.1—4.5、4.6.10、4.8、4.14
+5. 第5章：检查5.1、5.2、5.4
+6. 第6章：6.1—6.6全部联动
+7. 第7章：7.4、7.5
+8. 第8章：8.1.4、8.2
+9. 第9章：9.1、9.2
+10. 第10章：附表3—10；点位变化时附表1—2
+
+当前已知冲突：
+- 自用比例：70% vs 80%
+- 上网比例：30% vs 20%
+- 自用结算价：0.68 vs 0.70
+- 税前IRR：3.95% vs 4.71%
+- 税后IRR：3.06% vs 3.66%
+- DSCR：1.48 vs 1.52
+- 附表5—9仍存在旧数据
+`;
+  const blob = new Blob([text], {type:'text/plain;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '锦州市光伏可研_修改清单.txt';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+</script>
+</body>
+</html>
